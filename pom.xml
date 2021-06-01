@@ -17,10 +17,14 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+
+
+        <!--Redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -90,6 +94,13 @@
             <artifactId>lombok</artifactId>
             <groupId>org.projectlombok</groupId>
             <version>1.18.20</version>
+        </dependency>
+
+        <!-- Redis数据库操作工具   -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
     </dependencies>

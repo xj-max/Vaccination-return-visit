@@ -90,7 +90,6 @@ public class SendCodeUtils {
         for (int i = 0; i <= 3; i++) {
             sb.append(list.get(i));
         }
-
         return sb.toString();
     }
 
