@@ -33,6 +33,7 @@ public class reviewController {
     @RequestMapping("/subscribe/login")
     @CrossOrigin
     public Map<String, Object> subscribeLogin(String sid) {
+        System.out.println(sid);
         //查询数据库中sid
         List<Review> list = reviewService.subscribeLogin(sid);
         //非空判断
