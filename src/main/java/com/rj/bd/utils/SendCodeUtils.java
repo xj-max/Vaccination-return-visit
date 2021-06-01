@@ -14,9 +14,6 @@ import java.util.List;
 /**
  * @desc 短信发送工具类
  * @author Littiger
- * @title: SMSUtils
- * @description: TODO
- * @date 2021/5/3116:23
  */
 public class SendCodeUtils {
 
