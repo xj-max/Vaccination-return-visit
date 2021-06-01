@@ -2,6 +2,7 @@ package com.rj.bd.review.service;
 
 import com.rj.bd.review.dao.reviewDao;
 import com.rj.bd.review.entity.Review;
+import com.rj.bd.review.entity.Symptom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,11 @@ public class ReviewServiceImpl implements IReviewService {
     @Override
     public int surveyAdd(int sidr, String text, String symptom, String health, String time) {
         return reviewDao.surveyAdd(sidr, text, symptom, health, time);
+    }
+
+    @Override
+    public List<Symptom> symptomQueryAll() {
+        return reviewDao.symptomQueryAll();
     }
 
 

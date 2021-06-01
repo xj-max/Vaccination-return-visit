@@ -1,6 +1,7 @@
 package com.rj.bd.review.controller;
 
 import com.rj.bd.review.entity.Review;
+import com.rj.bd.review.entity.Symptom;
 import com.rj.bd.review.service.IReviewService;
 import com.rj.bd.utils.DateUtils;
 import com.rj.bd.utils.JedisPoolUtils;
@@ -97,7 +98,7 @@ public class reviewController {
      */
     @RequestMapping("/survey/toAdd")
     @CrossOrigin
-    public Map<String, Object> toAdd(String sid) {
+    public Map<String, Object> surveyToAdd(String sid) {
         //根据sid查询数据中各种信息
         List<Review> list = reviewService.surveyQueryById(sid);
         //非空判断
@@ -107,6 +108,24 @@ public class reviewController {
         //返回带有需要信息的json
         return JsonUtils.toJson("请求成功", 0, list);
     }
+
+    /**
+     * @return 页面中需要的症状信息 :发热、头疼、红肿
+     * @desc 进入添加回访症状
+     */
+    @RequestMapping("/symptom/toAdd")
+    @CrossOrigin
+    public Map<String, Object> symptomToAdd() {
+        //根据sid查询数据中各种信息
+        List<Symptom> list = reviewService.symptomQueryAll();
+        //非空判断
+        if (list.isEmpty()) {
+            return JsonUtils.toJson("请求失败", 1, null);
+        }
+        //返回带有需要信息的json
+        return JsonUtils.toJson("请求成功", 0, list);
+    }
+
 
     /**
      * @param sid

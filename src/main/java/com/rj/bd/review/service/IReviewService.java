@@ -1,6 +1,7 @@
 package com.rj.bd.review.service;
 
 import com.rj.bd.review.entity.Review;
+import com.rj.bd.review.entity.Symptom;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface IReviewService {
     List<Review> surveyQueryById(String sid);
 
     int surveyAdd(int sidr, String text, String symptom, String health, String time);
+
+    List<Symptom> symptomQueryAll();
 }

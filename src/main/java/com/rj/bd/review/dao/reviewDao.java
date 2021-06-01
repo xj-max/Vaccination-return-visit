@@ -1,6 +1,7 @@
 package com.rj.bd.review.dao;
 
 import com.rj.bd.review.entity.Review;
+import com.rj.bd.review.entity.Symptom;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -29,4 +30,7 @@ public interface reviewDao {
 
     @Insert("insert into survey values(#{sidr},#{text},#{symptom},#{health},#{time})")
     int surveyAdd(@Param("sidr") int sidr, @Param("text") String text, @Param("symptom") String symptom, @Param("health") String health, @Param("time") String time);
+
+    @Select("select syid,name from symptom")
+    List<Symptom> symptomQueryAll();
 }
