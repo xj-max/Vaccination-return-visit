@@ -59,7 +59,7 @@ public class reviewController {
         if (list.isEmpty()) {
             return JsonUtils.toJson("登录失败,请检查您手机号与验证码", 1);
         }
-        //返回带有token的json
+        //返回json
         return JsonUtils.toJson("登录成功", 0);
     }
 
