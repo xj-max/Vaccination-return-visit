@@ -20,7 +20,7 @@ public class SendCodeUtils {
     private static final String SMSAPPID = "1400320351";
     private static final String SMSSECREID = "AKID3jdhvTasZ3K9k6ufDVVJzQccbOvCECwN";
     private static final String SMSSECREKEY = "SM2ScXIo8HNEoFRTKtHYbOwENHwQt87r";
-    private static final String SMSSIGN = "快学网";
+    private static final String SMSSIGN = "疫苗接种回访系统";
     private static final String SMSTEMPLATEID = "881214";
 
     /**
