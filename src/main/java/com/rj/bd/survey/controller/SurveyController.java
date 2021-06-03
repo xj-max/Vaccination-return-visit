@@ -67,6 +67,27 @@ public class SurveyController {
         return JsonUtils.toJson("请求成功",0,surveyShowPageInfo.getTotal(),surveyShowPageInfo.getList());
     }
 
+    @RequestMapping("/del")
+    public Map<String,Object> deletetById(String id){
+            Map<String,Object> json = new HashMap<>();
+            if (id==null||id.equals("")){
+                json.put("code",1);
+                json.put("mag","非法请求");
+                return json;
+            }
+            int flag= surveyService.del(id);
+
+            if (flag==0){
+                json.put("code",1);
+                json.put("msg","删除失败！");
+                return json;
+            }
+            json.put("code",0);
+            json.put("msg","删除成功！");
+
+        return json;
+    }
+
 
 }
 

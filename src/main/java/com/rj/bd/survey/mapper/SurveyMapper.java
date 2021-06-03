@@ -1,5 +1,6 @@
 package com.rj.bd.survey.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import com.rj.bd.survey.entity.SurveyShow;
 import org.apache.ibatis.annotations.Mapper;
@@ -50,4 +51,8 @@ public interface SurveyMapper {
             "GROUP BY sid")
     List<SurveyShow> queryByName(@Param("real_name") String real_name);
 
+
+
+    @Delete("delete from  `survey` where sid=#{sid}")
+    int del(String id);
 }

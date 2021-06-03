@@ -15,4 +15,5 @@ public interface SurveyService {
 
     List<SurveyShow> queryByName(String name, Integer page, Integer limit);
 
+    int del(String id);
 }

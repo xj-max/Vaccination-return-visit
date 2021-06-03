@@ -37,4 +37,9 @@ public class SurveyServiceImpl implements SurveyService {
         return surveyMapper.queryByName(real_name);
 
     }
+
+    @Override
+    public int del(String id) {
+        return surveyMapper.del(id);
+    }
 }
