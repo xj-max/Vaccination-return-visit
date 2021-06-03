@@ -26,7 +26,7 @@ import java.util.Map;
 @RequestMapping("/review")
 public class reviewController {
     @Autowired
-    public IReviewService reviewService;
+    private IReviewService reviewService;
 
     Jedis jedis = JedisPoolUtils.getJedisSession();
     /**
@@ -79,24 +79,27 @@ public class reviewController {
     @RequestMapping("/survey/code")
     @CrossOrigin
     public Map<String, Object> surveyCode(String phone) throws TencentCloudSDKException {
+        //非空判断
+        if (("".equals(phone) || phone == null)) {
+            return JsonUtils.toJson("请求失败，请检查您手机号", 1);
+        }
         //工具类生成的code
         String code = SendCodeUtils.createdCode();
         //根据手机号生成code
         SendCodeUtils.send(phone, code);
         //存redis中的code
         jedis.set("surveyCode",code);
-        //设置过期时间
+        //设置过期时间，300秒
         jedis.expire("surveyCode",300);
         jedis.close();
-        return JsonUtils.toJson("请求成功", 0, "code:" + code);
+
+        return JsonUtils.toJson("请求成功", 0);
     }
 
     /**
      * @param sid
      * @return 页面中需要的各种name :客户姓名、医院名称、疫苗名称、以及时间
      * @desc 进入添加回访信息页面
-     *
-     * 
      */
     @RequestMapping("/survey/toAdd")
     @CrossOrigin
@@ -139,14 +142,17 @@ public class reviewController {
      */
     @RequestMapping("/survey/add")
     @CrossOrigin
-    public Map<String, Object> toAdd(String sid, String text, String symptom, String health) {
+    public Map<String, Object> surveyAdd(String sid, String text, String symptom, String health) {
         //非空判断
         if (("".equals(sid) || sid == null)
                 || ("".equals(text) || text == null)
                 || ("".equals(symptom) || symptom == null)
-                || ("".equals(health) || health == null)
         ) {
             return JsonUtils.toJson("请求失败", 1, null);
+        }
+        //设置默认值
+        if(("".equals(health) || health == null)){
+            health+="0";
         }
         //转型
         int sidr = Integer.parseInt(sid);

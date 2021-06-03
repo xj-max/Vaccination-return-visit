@@ -9,6 +9,25 @@ import java.util.Map;
  */
 public class JsonUtils {
 
+    public static Map<String, Object> toJson(String msg, int code, Object count,Object data) {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        if (data == null) {
+            map.put("code", 1);
+            map.put("msg", "请求失败");
+            return map;
+        }
+
+        map.put("msg", msg);
+        map.put("code", code);
+        map.put("count", count);
+        map.put("data", data);
+
+        return map;
+
+    }
+
     public static Map<String, Object> toJson(String msg, int code, Object data) {
 
         Map<String, Object> map = new HashMap<String, Object>();
