@@ -16,6 +16,6 @@ public interface SurveyService {
 
     List<SurveyShow> queryAllPage(Integer page, Integer limit);
 
-    List<SurveyShow> queryByName(String name, String vid, Integer page, Integer limit);
+    List<SurveyShow> queryByName(String name,Integer page, Integer limit);
 
 }

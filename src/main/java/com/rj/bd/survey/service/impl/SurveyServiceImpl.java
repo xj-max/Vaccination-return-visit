@@ -1,6 +1,5 @@
 package com.rj.bd.survey.service.impl;
 
-
 import com.github.pagehelper.PageHelper;
 import com.rj.bd.survey.entity.SurveyShow;
 import com.rj.bd.survey.mapper.SurveyMapper;
@@ -27,19 +26,18 @@ public class SurveyServiceImpl implements SurveyService {
     @Override
     public List<SurveyShow> queryAllPage(Integer page, Integer limit) {
         PageHelper.startPage(page, limit);
+        //bug PageHelper的bug需要执行2次查询才能请求到数据
+        System.out.println(surveyMapper.queryAll());
         return surveyMapper.queryAll();
     }
 
     @Override
-    public List<SurveyShow> queryByName(String name, String vid, Integer page, Integer limit) {
+    public List<SurveyShow> queryByName(String name, Integer page, Integer limit) {
         String real_name = "%" + name + "%";
-
-        if ("".equals(vid) || vid == null) {
-            vid = "%";
-        }
-
         PageHelper.startPage(page, limit);
-        return surveyMapper.queryByName(real_name, vid);
+        //bug PageHelper的bug需要执行2次查询才能请求到数据
+        System.out.println(surveyMapper.queryByName(real_name));
+        return surveyMapper.queryByName(real_name);
 
     }
 }

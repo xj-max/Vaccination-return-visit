@@ -29,6 +29,7 @@ public class reviewController {
     private IReviewService reviewService;
 
     Jedis jedis = JedisPoolUtils.getJedisSession();
+
     /**
      * @param sid
      * @return 登录成功后的json
@@ -55,7 +56,7 @@ public class reviewController {
      */
     @RequestMapping("/survey/login")
     @CrossOrigin
-    public Map<String, Object> surveyLogin(String sid, String phone,String code) {
+    public Map<String, Object> surveyLogin(String sid, String phone, String code) {
         //手机号+验证码进行登录
         List<Review> list = reviewService.surveyLogin(sid, phone);
         //非空判断
@@ -63,11 +64,11 @@ public class reviewController {
             return JsonUtils.toJson("登录失败,请检查您手机号与验证码。", 1);
         }
         //判断redis中的code
-        if (code.equals(jedis.get("surveyCode"))){
-             return JsonUtils.toJson("登录成功", 0);
+        if (code.equals(jedis.get("surveyCode"))) {
+            return JsonUtils.toJson("登录成功", 0);
         }
         //返回json
-      return JsonUtils.toJson("登录失败,请检查您手机号与验证码。", 1);
+        return JsonUtils.toJson("登录失败,请检查您手机号与验证码。", 1);
     }
 
     /**
@@ -88,9 +89,9 @@ public class reviewController {
         //根据手机号生成code
         SendCodeUtils.send(phone, code);
         //存redis中的code
-        jedis.set("surveyCode",code);
+        jedis.set("surveyCode", code);
         //设置过期时间，300秒
-        jedis.expire("surveyCode",300);
+        jedis.expire("surveyCode", 300);
         jedis.close();
 
         return JsonUtils.toJson("请求成功", 0);
@@ -151,8 +152,8 @@ public class reviewController {
             return JsonUtils.toJson("请求失败", 1, null);
         }
         //设置默认值
-        if(("".equals(health) || health == null)){
-            health+="0";
+        if (("".equals(health) || health == null)) {
+            health += "0";
         }
         //转型
         int sidr = Integer.parseInt(sid);

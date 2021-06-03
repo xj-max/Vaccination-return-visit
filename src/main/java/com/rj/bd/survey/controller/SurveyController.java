@@ -1,17 +1,19 @@
 package com.rj.bd.survey.controller;
 
+
 import com.github.pagehelper.PageInfo;
 import com.rj.bd.survey.entity.SurveyShow;
 import com.rj.bd.survey.service.SurveyService;
-import com.rj.bd.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * <p>
@@ -34,31 +36,27 @@ public class SurveyController {
 
         Map<String, Object> map = new HashMap<String, Object>();
         List<SurveyShow> list = surveyService.queryAllPage(page, limit);
-
-        PageInfo<SurveyShow> reservationPageInfo = new PageInfo<SurveyShow>(list);
+        PageInfo<SurveyShow> reservationPageInfo = new PageInfo<>(list);
         map.put("code", 0);
         map.put("msg", "请求成功");
         map.put("count", reservationPageInfo.getTotal());
         map.put("data", reservationPageInfo.getList());
         return map;
-
     }
 
     @RequestMapping("/queryByName")
-    public Map<String, Object> queryByName(String name, String vid, Integer page, Integer limit) {
-
+    public Map<String, Object> queryByName(String name, Integer page, Integer limit) {
         Map<String, Object> map = new HashMap<String, Object>();
-        List<SurveyShow> list = surveyService.queryByName(name, vid, page, limit);
-
-        PageInfo<SurveyShow> reservationPageInfo = new PageInfo<SurveyShow>(list);
+        List<SurveyShow> list = surveyService.queryByName(name, page, limit);
+        PageInfo<SurveyShow> surveyShowPageInfo = new PageInfo<>(list);
         map.put("code", 0);
         map.put("msg", "请求成功");
-        map.put("count", reservationPageInfo.getTotal());
-        map.put("data", reservationPageInfo.getList());
-
+        map.put("count", surveyShowPageInfo.getTotal());
+        map.put("data", surveyShowPageInfo.getList());
         return map;
-
     }
+
+
 
 }
 

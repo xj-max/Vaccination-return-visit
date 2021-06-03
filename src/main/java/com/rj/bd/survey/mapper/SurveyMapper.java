@@ -1,9 +1,6 @@
 package com.rj.bd.survey.mapper;
 
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import com.rj.bd.survey.entity.Survey;
 import com.rj.bd.survey.entity.SurveyShow;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -19,7 +16,7 @@ import java.util.List;
  * @since 2021-06-01
  */
 @Mapper
-public interface SurveyMapper extends BaseMapper<Survey> {
+public interface SurveyMapper{
 
     @Select("SELECT sid,vid,vname,l.name,health,time,text, GROUP_CONCAT(s.name) as symptom\n" +
             "from \n" +
@@ -36,15 +33,14 @@ public interface SurveyMapper extends BaseMapper<Survey> {
             "or\n" +
             "SUBSTRING_INDEX(SUBSTRING_INDEX(symptom,',',syid),',',-1) = s.syid\n" +
             "GROUP BY sid\n")
-    public List<SurveyShow> queryAll();
+    List<SurveyShow> queryAll();
 
     @Select("SELECT sid,vid,vname,l.name,health,time,text, GROUP_CONCAT(s.name) as symptom\n" +
             "from \n" +
             "(SELECT s.sid,hv.vid,u.name as name,v.name as vname,health,s.time,text, replace(REPLACE(symptom,\"[\",\"\"),\"]\",\"\") as symptom\n" +
             "from survey s,subscribe su,hospitalvaccine hv,vaccinetype v ,userinfo u\n" +
             "where\n" +
-            "u.name like #{name} AND\n" +
-            "cast(v.vid as char) like #{vid} AND\n" +
+            "u.name like #{real_name} AND\n" +
             "s.sid = su.sid AND\n" +
             "su.hvid = hv.hvid AND\n" +
             "hv.vid = v.vid AND\n" +
@@ -55,6 +51,6 @@ public interface SurveyMapper extends BaseMapper<Survey> {
             "or\n" +
             "SUBSTRING_INDEX(SUBSTRING_INDEX(symptom,',',syid),',',-1) = s.syid\n" +
             "GROUP BY sid")
-    public List<SurveyShow> queryByName(@Param("name") String name, @Param("vid") String vid);
+    List<SurveyShow> queryByName(@Param("real_name") String real_name);
 
 }
