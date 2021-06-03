@@ -11,11 +11,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * <p>
- *
- * </p>
- *
  * @author mxj
+ * @desc Survey实体类
  * @since 2021-06-01
  */
 @Data

@@ -26,19 +26,19 @@ public class adminController {
      * @param adminname
      * @param adminpwd
      * @return 登录成功的json
-     * @desc 通过手机号+验证码进行登录
+     * @desc 通过管理员账号+密码进行登录
      */
     @RequestMapping("/login")
     @CrossOrigin
     public Map<String, Object> adminLogin(String adminname, String adminpwd) {
-        //手机号+验证码进行登录
+        //管理员账号+密码进行登录
         List<Admin> list = adminervice.adminLogin(adminname, adminpwd);
         //非空判断
         if (list.isEmpty()) {
             return JsonUtils.toJson("登录失败,请检查您管理员账号与密码。", 1);
         }
         //返回json
-        return JsonUtils.toJson("登录成功", 1);
+        return JsonUtils.toJson("登录成功", 0);
     }
 
 

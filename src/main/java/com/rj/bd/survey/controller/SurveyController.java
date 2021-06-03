@@ -4,6 +4,7 @@ package com.rj.bd.survey.controller;
 import com.github.pagehelper.PageInfo;
 import com.rj.bd.survey.entity.SurveyShow;
 import com.rj.bd.survey.service.SurveyService;
+import com.rj.bd.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * <p>
- * 前端控制器
- * </p>
- *
  * @author mxj
+ * @desc survey控制层
  * @since 2021-06-01
  */
 @RestController
@@ -31,31 +28,44 @@ public class SurveyController {
     @Autowired
     SurveyService surveyService;
 
+    /**
+     * @desc 查询全部
+     * @param page
+     * @param limit
+     * @return 分页好的数据
+     */
     @RequestMapping("/queryAllPage")
     public Map<String, Object> queryAllPage(Integer page, Integer limit) {
-
-        Map<String, Object> map = new HashMap<String, Object>();
+        //查询全部
         List<SurveyShow> list = surveyService.queryAllPage(page, limit);
+        //非空判断
+        if (list.isEmpty()){
+            JsonUtils.toJson("请求失败",1);
+        }
+        //PageHelper处理数据
         PageInfo<SurveyShow> reservationPageInfo = new PageInfo<>(list);
-        map.put("code", 0);
-        map.put("msg", "请求成功");
-        map.put("count", reservationPageInfo.getTotal());
-        map.put("data", reservationPageInfo.getList());
-        return map;
+        return JsonUtils.toJson("请求成功",0,reservationPageInfo.getTotal(),reservationPageInfo.getList());
     }
 
+    /**
+     * @desc  模糊查询（根据name）
+     * @param name
+     * @param page
+     * @param limit
+     * @return 分页好的查询数据
+     */
     @RequestMapping("/queryByName")
     public Map<String, Object> queryByName(String name, Integer page, Integer limit) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        //模糊查询
         List<SurveyShow> list = surveyService.queryByName(name, page, limit);
+        //非空判断
+        if (list.isEmpty()){
+            JsonUtils.toJson("请求失败",1);
+        }
+        //PageHelper处理数据
         PageInfo<SurveyShow> surveyShowPageInfo = new PageInfo<>(list);
-        map.put("code", 0);
-        map.put("msg", "请求成功");
-        map.put("count", surveyShowPageInfo.getTotal());
-        map.put("data", surveyShowPageInfo.getList());
-        return map;
+        return JsonUtils.toJson("请求成功",0,surveyShowPageInfo.getTotal(),surveyShowPageInfo.getList());
     }
-
 
 
 }

@@ -10,11 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p>
- * 服务实现类
- * </p>
- *
  * @author mxj
+ * @desc surveyM层实现类
  * @since 2021-06-01
  */
 @Service

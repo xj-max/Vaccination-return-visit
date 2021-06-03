@@ -8,15 +8,12 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 /**
- * <p>
- * Mapper 接口
- * </p>
- *
  * @author mxj
+ * @desc survey持久层
  * @since 2021-06-01
  */
 @Mapper
-public interface SurveyMapper{
+public interface SurveyMapper {
 
     @Select("SELECT sid,vid,vname,l.name,health,time,text, GROUP_CONCAT(s.name) as symptom\n" +
             "from \n" +

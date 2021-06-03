@@ -9,10 +9,8 @@ import java.util.List;
 
 /**
  * @author mxj
- * @title: SurveyShow
- * @projectName VaccinationSystem
- * @description: TODO
- * @date 2021/6/28:56
+ * @desc SurveyShow实体类
+ * @since 2021-06-01
  */
 
 public class SurveyShow {
