@@ -67,6 +67,10 @@ public class SurveyController {
         return JsonUtils.toJson("请求成功",0,surveyShowPageInfo.getTotal(),surveyShowPageInfo.getList());
     }
 
+    /**
+     * @desc 根据id删除记录
+     * @param id
+     */
     @RequestMapping("/del")
     public Map<String,Object> deletetById(String id){
             Map<String,Object> json = new HashMap<>();
@@ -87,6 +91,8 @@ public class SurveyController {
 
         return json;
     }
+
+
 
 
 }

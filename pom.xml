@@ -108,7 +108,7 @@
             <version>1.18.20</version>
         </dependency>
 
-        <!-- Redis数据库操作工具   -->
+        <!-- jedis依赖 -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>

@@ -5,6 +5,7 @@ import com.rj.bd.survey.entity.SurveyShow;
 import com.rj.bd.survey.mapper.SurveyMapper;
 import com.rj.bd.survey.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
+    @Cacheable(value ="SurveyQueryByName", key = "'name'+#name", unless = "#result == null")
     public List<SurveyShow> queryByName(String name, Integer page, Integer limit) {
         String real_name = "%" + name + "%";
         PageHelper.startPage(page, limit);
