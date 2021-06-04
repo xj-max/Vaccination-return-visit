@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface reviewDao {
 
-    @Select("select sid from subscribe where sid = #{sid}")
+    @Select("select sid from subscribe where sid = #{sid} and scode = 0")
     List<Review> subscribeLogin(@Param("sid") String sid);
 
     @Select("select s.sid,u.phone from user u left join subscribe s on u.uid = s.uid\n" +
