@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+#3.spring配置
+spring:
+  application:
+    name: qsub-survey
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.2.25.6:3306/vaccinemanage?userSSL=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+
+#4.eureka在provider-user-8001这个子系统使用的配置，目的是将当前项目的服务注册到“注册中心-eureka7001”中
+eureka:
+  client:
+    service-url:
+      defaultZone: http://www.qsubeureka7002.com:7002/eureka/,http://www.qsubeureka7001.com:7001/eureka/,http://www.qsubeureka7003.com:7003/eureka/
+  instance:
+    instance-id: qsub-survey-01
+    prefer-ip-address: true
+
+#5.服务监控的信息配置
+info:
+  app.name: qsub-survey-littiger #显示的应用的名字
+  company.name: www.huhuhu.com   #公司的名字
