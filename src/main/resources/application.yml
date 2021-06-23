@@ -27,5 +27,5 @@ eureka:
 
 #5.服务监控的信息配置
 info:
-  app.name: qsub-survey-littiger #显示的应用的名字
-  company.name: www.huhuhu.com   #公司的名字
+  app.name: qsub-survey-wxymxj #显示的应用的名字
+  company.name: www.wxymxj.com   #公司的名字
