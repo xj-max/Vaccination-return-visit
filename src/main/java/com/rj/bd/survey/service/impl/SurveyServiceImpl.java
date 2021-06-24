@@ -30,7 +30,6 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-
     public List<SurveyShow> queryByName(String name, Integer page, Integer limit) {
         String real_name = "%" + name + "%";
         PageHelper.startPage(page, limit);

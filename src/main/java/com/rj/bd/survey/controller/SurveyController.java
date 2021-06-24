@@ -57,6 +57,7 @@ public class SurveyController {
      */
     @RequestMapping("/queryByName")
     @Cacheable(cacheNames ="SurveyQueryByName", key = "#name")
+//    @Cacheable(value ="SurveyQueryByName", key = "#name")
     public Map<String, Object> queryByName(String name, Integer page, Integer limit) {
         //模糊查询
         List<SurveyShow> list = surveyService.queryByName(name, page, limit);

@@ -2,7 +2,9 @@ package com.rj.bd.survey.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import java.util.List;
  */
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class SurveyShow implements Serializable {
 
     private Integer sid;
