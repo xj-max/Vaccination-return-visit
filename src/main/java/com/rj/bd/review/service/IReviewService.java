@@ -21,4 +21,6 @@ public interface IReviewService {
     int surveyAdd(int sidr, String text, String symptom, String health, String time);
 
     List<Symptom> symptomQueryAll();
+
+    List<Review> surveyCode(String sid, String phone);
 }

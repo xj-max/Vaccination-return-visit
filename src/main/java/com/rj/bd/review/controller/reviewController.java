@@ -79,11 +79,23 @@ public class reviewController {
      */
     @RequestMapping("/survey/code")
     @CrossOrigin
-    public Map<String, Object> surveyCode(String phone) throws TencentCloudSDKException {
+    public Map<String, Object> surveyCode(String phone,String sid) throws TencentCloudSDKException {
+        //手机号+验证码进行登录
+        List<Review> list = reviewService.surveyCode(sid, phone);
+        System.out.println(sid);
+        System.out.println(list);
+        System.out.println(phone);
+        //非空判断
+        if (list.isEmpty()) {
+            return JsonUtils.toJson("发送失败,请检查您手机号。", 1);
+        }
+
+
         //非空判断
         if (("".equals(phone) || phone == null)) {
             return JsonUtils.toJson("请求失败，请检查您手机号", 1);
         }
+
         //工具类生成的code
         String code = SendCodeUtils.createdCode();
         //根据手机号生成code

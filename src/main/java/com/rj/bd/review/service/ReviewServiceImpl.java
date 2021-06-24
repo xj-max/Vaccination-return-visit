@@ -46,5 +46,10 @@ public class ReviewServiceImpl implements IReviewService {
         return reviewDao.symptomQueryAll();
     }
 
+    @Override
+    public List<Review> surveyCode(String sid, String phone) {
+        return reviewDao.surveyCode(sid,phone);
+    }
+
 
 }

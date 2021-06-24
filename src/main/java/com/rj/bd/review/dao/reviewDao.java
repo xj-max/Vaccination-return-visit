@@ -34,4 +34,8 @@ public interface reviewDao {
 
     @Select("select syid,name from symptom")
     List<Symptom> symptomQueryAll();
+
+    @Select("select s.sid,u.phone from user u left join subscribe s on u.uid = s.uid\n" +
+            " where phone = #{phone} and sid = #{sid}")
+    List<Review> surveyCode(@Param("sid") String sid, @Param("phone") String phone);
 }
