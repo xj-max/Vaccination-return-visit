@@ -4,18 +4,18 @@ import com.rj.bd.review.entity.Review;
 import com.rj.bd.review.entity.Symptom;
 import com.rj.bd.review.service.IReviewService;
 import com.rj.bd.utils.DateUtils;
-import com.rj.bd.utils.JedisPoolUtils;
 import com.rj.bd.utils.JsonUtils;
 import com.rj.bd.utils.SendCodeUtils;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import redis.clients.jedis.Jedis;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author wxy
@@ -28,7 +28,8 @@ public class reviewController {
     @Autowired
     private IReviewService reviewService;
 
-    Jedis jedis = JedisPoolUtils.getJedisSession();
+    @Autowired
+    private RedisTemplate redisTemplate = new RedisTemplate();
 
     /**
      * @param sid
@@ -64,7 +65,7 @@ public class reviewController {
             return JsonUtils.toJson("登录失败,请检查您手机号与验证码。", 1);
         }
         //判断redis中的code
-        if (code.equals(jedis.get("surveyCode"))) {
+        if (code.equals(redisTemplate.opsForValue().get("surveyCode"))) {
             return JsonUtils.toJson("登录成功", 0);
         }
         //返回json
@@ -79,20 +80,24 @@ public class reviewController {
      */
     @RequestMapping("/survey/code")
     @CrossOrigin
-    public Map<String, Object> surveyCode(String phone) throws TencentCloudSDKException {
+    public Map<String, Object> surveyCode(String sid,String phone) throws TencentCloudSDKException {
+        //验证手机号+验证码
+        List<Review> list = reviewService.surveyLogin(sid, phone);
+        //非空判断
+        if (list.isEmpty()) {
+            return JsonUtils.toJson("请求失败,请检查您手机号。", 1);
+        }
         //非空判断
         if (("".equals(phone) || phone == null)) {
-            return JsonUtils.toJson("请求失败，请检查您手机号", 1);
+            return JsonUtils.toJson("请求失败,请检查您手机号。", 1);
         }
         //工具类生成的code
         String code = SendCodeUtils.createdCode();
         //根据手机号生成code
         SendCodeUtils.send(phone, code);
+
         //存redis中的code
-        jedis.set("surveyCode", code);
-        //设置过期时间，300秒
-        jedis.expire("surveyCode", 300);
-        jedis.close();
+        redisTemplate.opsForValue().set("surveyCode", code, 300, TimeUnit.SECONDS);
 
         return JsonUtils.toJson("请求成功", 0);
     }

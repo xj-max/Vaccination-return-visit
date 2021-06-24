@@ -2,14 +2,13 @@ package com.rj.bd.admin.controller;
 
 import com.rj.bd.admin.entity.Admin;
 import com.rj.bd.admin.service.IAdminervice;
-import com.rj.bd.utils.JedisPoolUtils;
 import com.rj.bd.utils.JsonUtils;
 import com.rj.bd.utils.RanImgCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import redis.clients.jedis.Jedis;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author wxy
@@ -29,7 +29,8 @@ public class adminController {
     @Autowired
     private IAdminervice adminervice;
 
-    Jedis jedis = JedisPoolUtils.getJedisSession();
+    @Autowired
+    private RedisTemplate redisTemplate = new RedisTemplate();
 
     /**
      * @param adminname
@@ -43,7 +44,7 @@ public class adminController {
         //管理员账号+密码进行登录
         List<Admin> list = adminervice.adminLogin(adminname, adminpwd);
         if (list!=null||list.equals("")){
-            String code=jedis.get("Code");
+            String code= (String) redisTemplate.opsForValue().get("Code");
             if (captcha.equals(code)){
                 return JsonUtils.toJson("登录成功", 0);
             }else {
@@ -68,11 +69,9 @@ public class adminController {
         //取出生成的验证码
         String code = r.getText();
         //生成前清除缓存信息
-        jedis.del("Code");
+        redisTemplate.delete("Code");
         //生成验证码存redis中的code
-        jedis.set("Code", code);
-        //缓存时间
-        jedis.expire("Code", 60);
+        redisTemplate.opsForValue().set("Code", code, 60, TimeUnit.SECONDS);
         //创建map容器
         Map map = new HashMap();
         map.put("code", code);
