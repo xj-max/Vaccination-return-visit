@@ -6,6 +6,7 @@ import com.rj.bd.survey.entity.SurveyShow;
 import com.rj.bd.survey.service.SurveyService;
 import com.rj.bd.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -55,6 +56,7 @@ public class SurveyController {
      * @return 分页好的查询数据
      */
     @RequestMapping("/queryByName")
+    @Cacheable(cacheNames ="SurveyQueryByName", key = "#name")
     public Map<String, Object> queryByName(String name, Integer page, Integer limit) {
         //模糊查询
         List<SurveyShow> list = surveyService.queryByName(name, page, limit);

@@ -30,12 +30,11 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    @Cacheable(value ="SurveyQueryByName", key = "'name'+#name", unless = "#result == null")
+
     public List<SurveyShow> queryByName(String name, Integer page, Integer limit) {
         String real_name = "%" + name + "%";
         PageHelper.startPage(page, limit);
-        //bug PageHelper的bug需要执行2次查询才能请求到数据
-        System.out.println(surveyMapper.queryByName(real_name));
+//        System.out.println(surveyMapper.queryByName(real_name));/**/
         return surveyMapper.queryByName(real_name);
 
     }

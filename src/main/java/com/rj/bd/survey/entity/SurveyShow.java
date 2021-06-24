@@ -1,7 +1,10 @@
 package com.rj.bd.survey.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -12,8 +15,9 @@ import java.util.List;
  * @desc SurveyShow实体类
  * @since 2021-06-01
  */
-
-public class SurveyShow {
+@NoArgsConstructor
+@AllArgsConstructor
+public class SurveyShow implements Serializable {
 
     private Integer sid;
 
